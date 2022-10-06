@@ -1,0 +1,113 @@
+<div class="log">
+  <h2 id="page-heading" data-cy="LyceeTechniqueHeading">
+    <p class="list">Identification du lycée technique</p>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Rafraîchir la liste</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="lyceeTechniques?.length === 0">
+    <span>Aucun lycée technique trouvé</span>
+  </div>
+
+  <div class="row">
+    <!-- <div class="col-md-1"></div> -->
+    <div class="col-md-12">
+      <p> {{ lyceeTechniques }} </p>
+      <div class="table-responsive" id="entities" *ngIf="lyceeTechniques && lyceeTechniques.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+              <!-- <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th> -->
+              <th scope="col" jhiSortBy="nomLycee.id"><span>Nom du lycée</span> <fa-icon icon="sort"></fa-icon></th>
+              <th scope="col" jhiSortBy="prenomNom">
+                <span>Prénom et nom du chef d'établissement</span> <fa-icon icon="sort"></fa-icon>
+              </th>
+              <th scope="col" jhiSortBy="adresse"><span>Adresse</span> <fa-icon icon="sort"></fa-icon></th>
+              <th scope="col" jhiSortBy="mail">
+                <span>E-mail</span> <fa-icon icon="sort"></fa-icon>
+              </th>
+              <th scope="col" jhiSortBy="tel1"><span>Téléphone 1</span> <fa-icon icon="sort"></fa-icon></th>
+              <th scope="col" jhiSortBy="tel2"><span>Téléphone 2</span> <fa-icon icon="sort"></fa-icon></th>
+
+              <th scope="col" jhiSortBy="region"><span>Région</span> <fa-icon icon="sort"></fa-icon></th>
+              <!-- <th scope="col" jhiSortBy="autreRegion"><span>Autre Region</span> <fa-icon icon="sort"></fa-icon></th> -->
+              <th scope="col" jhiSortBy="departementDakar"><span>Département </span> <fa-icon icon="sort"></fa-icon></th>
+
+              <th scope="col" jhiSortBy="commune"><span>Commune</span> <fa-icon icon="sort"></fa-icon></th>
+              <th scope="col" jhiSortBy="ia"><span>IA</span> <fa-icon icon="sort"></fa-icon></th>
+              <!-- <th scope="col" jhiSortBy="proviseur.nomPrenom"><span>Proviseur</span> <fa-icon icon="sort"></fa-icon></th> -->
+
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let lyceeTechnique of lyceeTechniques" data-cy="entityTable">
+              <!-- <td>
+            <a [routerLink]="['/lycee-technique', lyceeTechnique.id, 'view']">{{ lyceeTechnique.id }}</a>
+          </td> -->
+              <td>
+                <div *ngIf="lyceeTechnique.nomLycee">
+                  <!-- <a [routerLink]="['/lycees-techniques', lyceeTechnique.nomLycee?.nomLycee, 'view']">{{
+                    lyceeTechnique.nomLycee?.nomLycee
+                  }}</a> -->
+                </div>
+              </td>
+              <td *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PROVISEUR']">{{ lyceeTechnique.prenomNom }}</td>
+              <td>{{ lyceeTechnique.adresse }}</td>
+              <td *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PROVISEUR']">{{ lyceeTechnique.mail }}</td>
+              <td>{{ lyceeTechnique.tel1 }}</td>
+              <td>{{ lyceeTechnique.tel2 }}</td>
+
+              <td>{{ lyceeTechnique.region }}</td>
+
+              <td>
+                {{ lyceeTechnique.departementDakar }}
+                {{ lyceeTechnique.departementDiourbel }}
+                {{ lyceeTechnique.departementFatick }}
+                {{ lyceeTechnique.departementKaffrine }}
+                {{ lyceeTechnique.departementKaolack }}
+                {{ lyceeTechnique.departementKedougou }}
+                {{ lyceeTechnique.departementKolda }}
+                {{ lyceeTechnique.departementLouga }}
+                {{ lyceeTechnique.departementMatam }}
+                {{ lyceeTechnique.departementSaint }}
+                {{ lyceeTechnique.departementSedhiou }}
+                {{ lyceeTechnique.departementTambacounda }}
+                {{ lyceeTechnique.departementThis }}
+                {{ lyceeTechnique.departementZiguinchor }}
+                {{ lyceeTechnique.autredepartementDakar }}
+                {{ lyceeTechnique.autredepartementDiourbel }}
+                {{ lyceeTechnique.autredepartementFatick }}
+                {{ lyceeTechnique.autredepartementKaffrine }}
+                {{ lyceeTechnique.autredepartementKaolack }}
+                {{ lyceeTechnique.autredepartementKedougou }}
+                {{ lyceeTechnique.autredepartementKolda }}
+                {{ lyceeTechnique.autredepartementLouga }}
+                {{ lyceeTechnique.autredepartementMatam }}
+                {{ lyceeTechnique.autredepartementSaint }}
+                {{ lyceeTechnique.autredepartementSedhiou }}
+                {{ lyceeTechnique.autredepartementTambacounda }}
+                {{ lyceeTechnique.autredepartementThis }}
+                {{ lyceeTechnique.autredepartementZiguinchor }}
+              </td>
+
+
+              <td>{{ lyceeTechnique.commune }}</td>
+              <td>{{ lyceeTechnique.ia }}</td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
